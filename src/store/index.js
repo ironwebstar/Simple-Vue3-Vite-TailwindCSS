@@ -1,40 +1,33 @@
-import Vue from 'vue'
-import { createStore } from 'vuex'
+import { createStore } from "vuex"
+import { initialState, selectedColor } from "../data"
 
 const store = createStore({
   modules: {},
 
   state: () => ({
-    upvotes: [],
+    upvotes: initialState.upvotes,
+    selectedColor,
   }),
 
   getters: {},
 
   mutations: {
-    CHANGE_STATE(state, index) {
-      Vue.set(state.upvotes, index, !state.upvotes[index].selected)
+    CHANGE_STATE(state, { index, newUpvote }) {
+      state.upvotes[index] = newUpvote
     },
 
-    INCREASE_COUNT(state, index) {
-      Vue.set(state.upvotes, index, state.upvotes[index].count + 1)
-    },
-
-    DECREASE_COUNT(state) {
-      Vue.set(state.upvotes, index, state.upvotes[index].count - 1)
+    CHANGE_COLOR(state, newColor) {
+      state.selectedColor = newColor
     },
   },
 
   actions: {
-    changeState({ commit }, index) {
-      commit('CHANGE_STATE', index)
+    updateVote({ commit }, { index, newUpvote }) {
+      commit("CHANGE_STATE", { index, newUpvote })
     },
 
-    increaseCount({ commit }, index) {
-      commit('INCREASE_COUNT', index)
-    },
-
-    decreaseCount({ commit }, index) {
-      commit('DECREASE_COUNT', index)
+    changeColor({ commit }, newColor) {
+      commit("CHANGE_COLOR", newColor)
     },
   },
 })
